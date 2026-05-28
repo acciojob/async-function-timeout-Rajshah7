@@ -1,29 +1,33 @@
-let btn = document.getElementById('btn');
-let text = document.getElementById('text');
-let delay = document.getElementById('delay');
-let output = document.getElementById('output');
+const btn = document.getElementById("btn");
+    const text = document.getElementById("text");
+    const delay = document.getElementById("delay");
+    const output = document.getElementById("output");
 
-function printDelay(text,delay){
-	return new Promise(() => {
-		setTimeout(() => {
-		output.innerHTML = `
-			<div>
-				${text} - ${delay}
-			</div>
-		`
-	},delay * 1000);
-	})
-}
+    function wait(delayValue) {
 
-async function callFunction(text,delay){
-	try{
-		await printDelay(text,delay);
-	}catch(e){
-		console.log("err");
-	}
-}
+      return new Promise((resolve) => {
 
-btn.addEventListener('click', () => {
-	callFunction(text.value,delay.value);
-})
+        setTimeout(() => {
 
+          resolve();
+
+        }, delayValue);
+
+      });
+
+    }
+
+    async function displayMessage() {
+
+      const message = text.value;
+      const delayValue = Number(delay.value);
+
+      output.innerHTML = "";
+
+      await wait(delayValue);
+
+      output.innerHTML = message;
+
+    }
+
+    btn.addEventListener("click", displayMessage);
